@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login et Inscription</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin: 15px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .card-header.inscription {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header text-center">
+                    Connexion
+                </div>
+                <div class="card-body">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="loginEmail" name="username" placeholder="Entrer votre nom d'utilisateur" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Mot de passe</label>
+                            <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Entrer votre mot de passe" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header text-center inscription">
+                    Inscription
+                </div>
+                <div class="card-body">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerName">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="registerName" name="username" placeholder="Entrer votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Mot de passe</label>
+                            <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Créer un mot de passe" required>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la connexion');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Gérer la réponse de la connexion
+                console.log(data);
+                alert('Connexion réussie ! Redirection vers le tableau de bord.');
+                window.location.href = '/dashboard'; // Redirection vers le tableau de bord après connexion réussie
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la connexion');
+            });
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'inscription');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Gérer la réponse de l'inscription
+                console.log(data);
+                alert('Inscription réussie !');
+                // Vous pouvez ajouter d'autres actions ici si nécessaire
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'inscription');
+            });
+    });
+</script>
+
+</body>
+</html>

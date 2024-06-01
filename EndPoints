@@ -1,0 +1,31 @@
+GET /api/critere : Obtenir tous les critères.
+GET /api/critere/<int:id> : Obtenir un critère spécifique.
+POST /api/critere : Créer un nouveau critère.
+PUT /api/critere/<int:id> : Mettre à jour un critère existant.
+DELETE /api/critere/<int:id> : Supprimer un critère.
+------------------------------------------------------------
+GET /api/agent : Obtenir tous les agents.
+GET /api/agent/<int:id> : Obtenir un agent spécifique.
+POST /api/agent : Créer un nouvel agent.
+PUT /api/agent/<int:id> : Mettre à jour un agent existant.
+DELETE /api/agent/<int:id> : Supprimer un agent.
+------------------------------------------------------------
+GET /api/amande : Obtenir toutes les amandes.
+GET /api/amande/<int:id> : Obtenir une amande spécifique.
+POST /api/amande : Créer une nouvelle amande.
+PUT /api/amande/<int:id> : Mettre à jour une amande existante.
+DELETE /api/amande/<int:id> : Supprimer une amande.
+------------------------------------------------------------
+GET /api/point_de_controle : Obtenir tous les points de contrôle.
+GET /api/point_de_controle/<int:id> : Obtenir un point de contrôle spécifique.
+POST /api/point_de_controle : Créer un nouveau point de contrôle.
+PUT /api/point_de_controle/<int:id> : Mettre à jour un point de contrôle existant.
+DELETE /api/point_de_controle/<int:id> : Supprimer un point de contrôle.
+-------------------------------------------------------------
+GET /api/controle_routier : Obtenir tous les contrôles routiers.
+GET /api/controle_routier/<int:id> : Obtenir un contrôle routier spécifique.
+POST /api/controle_routier : Créer un nouveau contrôle routier.
+PUT /api/controle_routier/<int:id> : Mettre à jour un contrôle routier existant.
+DELETE /api/controle_routier/<int:id> : Supprimer un contrôle routier.
+-------------------------------------------E ND-------------------------------------------------------
+
