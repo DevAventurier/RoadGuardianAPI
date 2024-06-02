@@ -27,5 +27,5 @@ GET /api/controle_routier/<int:id> : Obtenir un contrôle routier spécifique.
 POST /api/controle_routier : Créer un nouveau contrôle routier.
 PUT /api/controle_routier/<int:id> : Mettre à jour un contrôle routier existant.
 DELETE /api/controle_routier/<int:id> : Supprimer un contrôle routier.
--------------------------------------------E ND-------------------------------------------------------
-
+-------------------------------------------END-------------------------------------------------------
+/api/critere est lexemple de route a utiliser pour recourir a l'api
