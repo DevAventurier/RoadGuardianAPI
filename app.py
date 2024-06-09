@@ -4,15 +4,21 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import datetime
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_cors import CORS
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
 Bootstrap(app)
+CORS(app)
+
+
 
 # Configuration de la clé secrète et de la base de données
 app.secret_key = "Secret Key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:93017539@localhost/charityv2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:vealeto@localhost/charityv2'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 
@@ -85,7 +91,8 @@ class PointDeControle(db.Model):
 class ControleRoutier(db.Model):
     __tablename__ = 'controles_routiers'
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    # date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    date = db.Column(db.DateTime,  nullable=True,server_default=func.now())
     nom_prenom = db.Column(db.String(100), nullable=False)
     type_piece = db.Column(db.String(50), nullable=False)
     type_vehicule = db.Column(db.String(50), nullable=False)
@@ -426,7 +433,9 @@ def get_controle_routier(id):
 @app.route('/api/controle_routier', methods=['POST'])
 def create_controle_routier():
     data = request.get_json()
-    date = datetime.datetime.strptime(data.get('date'), '%Y-%m-%d %H:%M:%S')
+    date_str = data.get('date')
+    date = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S') if date_str else None
+    # date = datetime.datetime.strptime(data.get('date'), '%Y-%m-%d %H:%M:%S')
     nom_prenom = data.get('nom_prenom')
     type_piece = data.get('type_piece')
     type_vehicule = data.get('type_vehicule')
@@ -461,7 +470,8 @@ def create_controle_routier():
 def update_controle_routier(id):
     data = request.get_json()
     controle_routier = ControleRoutier.query.get(id)
-    controle_routier.date = datetime.datetime.strptime(data.get('date'), '%Y-%m-%d %H:%M:%S')
+    date_str = data.get('date', '').strip()
+    controle_routier.date = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S') if date_str else None
     controle_routier.nom_prenom = data.get('nom_prenom')
     controle_routier.type_piece = data.get('type_piece')
     controle_routier.type_vehicule = data.get('type_vehicule')
